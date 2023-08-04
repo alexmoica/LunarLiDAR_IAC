@@ -1,0 +1,6 @@
+/*
+!lunar_rover/
+!.gitignore
+lunar_rover/launch/archive/
+lunar_rover/models/archive/
+lunar_rover/worlds/lunar_rover/archive/
