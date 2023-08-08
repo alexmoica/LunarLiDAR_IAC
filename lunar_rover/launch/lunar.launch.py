@@ -17,7 +17,7 @@ def generate_launch_description():
   robot_localization_file_path = os.path.join(pkg_share, 'config/ekf.yaml') 
   robot_name_in_urdf = 'lunar_rover'
   default_rviz_config_path = os.path.join(pkg_share, 'rviz/nav2_config.rviz')
-  world_file_name = 'lunar_rover/3D_Lunar.world'
+  world_file_name = 'lunar_rover/Lunar.world'
   world_path = os.path.join(pkg_share, 'worlds', world_file_name)
   nav2_dir = FindPackageShare(package='nav2_bringup').find('nav2_bringup') 
   nav2_launch_dir = os.path.join(nav2_dir, 'launch') 

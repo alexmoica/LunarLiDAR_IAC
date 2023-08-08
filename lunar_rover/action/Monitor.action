@@ -1,0 +1,6 @@
+# Monitor.action
+string command
+---
+string result
+---
+string feedback
