@@ -2,6 +2,7 @@
 
 import rclpy
 import time
+import re
 from rclpy.action import ActionServer
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
@@ -25,9 +26,7 @@ class AvoidanceActionServer(Node):
         
         goal = PoseStamped()
         goal.header.frame_id = "map"
-        goal.pose.position.x = 9.5
-        goal.pose.position.y = -9.5
-        goal.pose.position.z = 0.0
+        goal.pose.position.z = 0.239989
         goal.pose.orientation.x = 0.0
         goal.pose.orientation.y = 0.0
         goal.pose.orientation.z = 0.0
@@ -67,10 +66,19 @@ class AvoidanceActionServer(Node):
 
             except Exception as e:
                 self.get_logger().error(f"Error occurred: {e}")
-        elif goal_handle.request.command == "start":
-            # Publish the initial goal pose
-            self._goal_publisher.publish(goal)
-            self.get_logger().info('Published initial goal.')
+        elif "start" in goal_handle.request.command:
+            match = re.match(r"start \(([-0-9.]+), ([-0-9.]+)\)", goal_handle.request.command)
+            if match:
+                x_value = float(match.group(1))
+                y_value = float(match.group(2))
+                goal.pose.position.x = x_value + 0.8
+                goal.pose.position.y = y_value - 0.8
+                
+                if goal.pose.position.x < 13.5:
+                    self._goal_publisher.publish(goal)
+                    self.get_logger().info('Published initial goal.')
+                else:
+                    self.get_logger().info('End of path.')
         else:
             self.get_logger().info('Ignoring unknown command.')
             

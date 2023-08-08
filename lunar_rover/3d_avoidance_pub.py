@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
 from geometry_msgs.msg import Pose
-from std_msgs.msg import Header
+from std_msgs.msg import Header, Bool
 import math
 
 class Avoidance3D(Node):
@@ -22,6 +22,9 @@ class Avoidance3D(Node):
             'lunar_rover': None,
             'dynamic_rover': None
         }
+        
+        self.collision_publisher = self.create_publisher(Bool, 'collision_event', 10)
+        self.no_collision_publisher = self.create_publisher(Bool, 'no_collision_event', 10)
 
     def timer_callback(self):
         # Wait for the service to be available
@@ -62,6 +65,10 @@ class Avoidance3D(Node):
                 # Check for collision risk based on distance
                 if distance < 4.0:
                     self.get_logger().info(f'Collision risk detected! Distance: {distance:.2f}')
+                    self.collision_publisher.publish(Bool(data=True))
+                else:
+                    self.get_logger().info(f'No collision risk detected.')
+                    self.no_collision_publisher.publish(Bool(data=True))
             
             # Store current position for lunar_rover
             self.prev_positions['lunar_rover'] = position

@@ -3,8 +3,8 @@
 import rclpy
 from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
-from geometry_msgs.msg import Pose
-from std_msgs.msg import Header
+from geometry_msgs.msg import Point
+from std_msgs.msg import Header, Bool
 import math
 
 class Avoidance4D(Node):
@@ -26,6 +26,9 @@ class Avoidance4D(Node):
         self.prev_velocities = {
             'dynamic_rover': None
         }
+        
+        self.collision_publisher = self.create_publisher(Bool, 'collision_event', 10)
+        self.no_collision_publisher = self.create_publisher(Point, 'no_collision_event', 10)
 
     def timer_callback(self):
         # Wait for the service to be available
@@ -51,6 +54,7 @@ class Avoidance4D(Node):
         future_lunar_rover.add_done_callback(self.service_callback_lunar_rover)
 
     def service_callback_lunar_rover(self, future):
+        collision_risk_flag = False
         try:
             response = future.result()
             position = response.state.pose.position
@@ -89,11 +93,12 @@ class Avoidance4D(Node):
                         # Calculate time to collision
                         time_to_collision = distance / math.sqrt(relative_velocity[0] ** 2 + relative_velocity[1] ** 2)
                         if time_to_collision <= 4:
+                            collision_risk_flag = True
                             self.get_logger().info(f'Collision risk detected! Time: {time_to_collision:.2f}, Distance: {distance:.2f}')
-                            #run avoidance
-                         else:
-                            self.get_logger().info(f'No collision risk detected.')
-                            #run initial pose set
+                            #self.collision_publisher.publish(Bool(data=True))
+            if not collision_risk_flag:
+                self.get_logger().info(f'No collision risk detected.')
+                self.no_collision_publisher.publish(position)
             
             # Store current position and timestamp for lunar_rover
             self.prev_positions['lunar_rover']['position'] = position
