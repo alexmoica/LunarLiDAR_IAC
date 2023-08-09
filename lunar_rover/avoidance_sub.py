@@ -3,10 +3,10 @@
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import Bool
 from geometry_msgs.msg import Point
 from lunar_rover.action import Avoidance
 from rclpy.action import ActionClient
+from std_msgs.msg import Float32MultiArray
 
 
 class AvoidanceSubscriber(Node):
@@ -14,7 +14,7 @@ class AvoidanceSubscriber(Node):
     def __init__(self):
         super().__init__('avoidance_subscriber')
         self.collision_subscription = self.create_subscription(
-            Bool,
+            Float32MultiArray,
             'collision_event',
             self.collision_listener_callback,
             10)
@@ -28,7 +28,7 @@ class AvoidanceSubscriber(Node):
     def collision_listener_callback(self, msg):
         if msg.data:
             self.get_logger().info('Collision risk detected.')
-            # run avoidance
+            self.send_avoid_command(msg)
 
     def no_collision_listener_callback(self, msg):
         if msg.x:
@@ -46,13 +46,24 @@ class AvoidanceSubscriber(Node):
         goal_handle = self.avoidance_client.send_goal_async(goal_msg)
         goal_handle.add_done_callback(self.goal_response_callback)
 
+    def send_avoid_command(self, point_msg):
+        if not self.avoidance_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().info('Avoidance action server not available, waiting...')
+            return
+
+        goal_msg = Avoidance.Goal()
+        goal_msg.command = f"avoid ({point_msg.data[0]}, {point_msg.data[1]}, {point_msg.data[2]}, {point_msg.data[3]})"
+
+        goal_handle = self.avoidance_client.send_goal_async(goal_msg)
+        goal_handle.add_done_callback(self.goal_response_callback)
+
     def goal_response_callback(self, future):
         try:
             goal_handle = future.result()
             if goal_handle.accepted:
-                self.get_logger().info('Start command sent to action server.')
+                self.get_logger().info('Command sent to action server.')
             else:
-                self.get_logger().info('Failed to send start command to action server.')
+                self.get_logger().info('Failed to send command to action server.')
         except Exception as e:
             self.get_logger().error(f"Error occurred: {e}")
 

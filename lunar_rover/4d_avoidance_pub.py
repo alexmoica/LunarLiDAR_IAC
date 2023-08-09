@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
 from geometry_msgs.msg import Point
-from std_msgs.msg import Header, Bool
+from std_msgs.msg import Header, Float32MultiArray
 import math
 
 class Avoidance4D(Node):
@@ -27,9 +27,10 @@ class Avoidance4D(Node):
             'dynamic_rover': None
         }
         
-        self.collision_publisher = self.create_publisher(Bool, 'collision_event', 10)
+        self.collision_publisher = self.create_publisher(Float32MultiArray, 'collision_event', 10)
         self.no_collision_publisher = self.create_publisher(Point, 'no_collision_event', 10)
-
+        self.collision_flag = False
+        
     def timer_callback(self):
         # Wait for the service to be available
         if not self.client.wait_for_service(timeout_sec=1.0):
@@ -82,7 +83,10 @@ class Avoidance4D(Node):
                 velocity_y = delta_y / delta_time
                 
                 # Check for collision risk based on distance and velocities
-                if distance < 10.0:
+                if distance < 5.0:
+                    if distance < 1.0:
+                        self.get_logger().info(f'Hit!')
+                        self.collision_flag = True
                     # Calculate relative velocity
                     relative_velocity = (velocity_x - prev_velocity_dynamic['v_x'], velocity_y - prev_velocity_dynamic['v_y'])
                     
@@ -92,10 +96,28 @@ class Avoidance4D(Node):
                     if dot_product < 0 and 0 not in relative_velocity:
                         # Calculate time to collision
                         time_to_collision = distance / math.sqrt(relative_velocity[0] ** 2 + relative_velocity[1] ** 2)
-                        if time_to_collision <= 4:
+                        if time_to_collision <= 6:
+                            # Calculate swerve direction
+                            swerve_data = Float32MultiArray()
+                            
+                            swerve_x = abs(velocity_x) + 2 * abs(prev_velocity_dynamic['v_x'])
+                            #set direction based on direction of dynamic_rover velocity
+                            if prev_velocity_dynamic['v_x'] > 0:
+                                swerve_x = -swerve_x
+                            elif prev_velocity_dynamic['v_x'] == 0:
+                                swerve_x = swerve_x * (1 if velocity_x >= 0 else -1)
+                            
+                            swerve_y = abs(velocity_y) + 2 * abs(prev_velocity_dynamic['v_y'])
+                            #set direction based on direction of dynamic_rover velocity
+                            if prev_velocity_dynamic['v_y'] > 0:
+                                swerve_y = -swerve_y
+                            elif prev_velocity_dynamic['v_y'] == 0:
+                                swerve_y = swerve_y * (1 if velocity_y >= 0 else -1)
+                            
+                            swerve_data.data = [position.x, position.y, swerve_x, swerve_y]
                             collision_risk_flag = True
                             self.get_logger().info(f'Collision risk detected! Time: {time_to_collision:.2f}, Distance: {distance:.2f}')
-                            #self.collision_publisher.publish(Bool(data=True))
+                            self.collision_publisher.publish(swerve_data)
             if not collision_risk_flag:
                 self.get_logger().info(f'No collision risk detected.')
                 self.no_collision_publisher.publish(position)

@@ -28,7 +28,7 @@ elif [ "$1" = "3d" ]; then
     gnome-terminal -- bash -c "cd ../.. && ros2 launch lunar_rover lunar.launch.py slam:=True; exec bash" &
     gnome-terminal -- bash -c "python3 avoidance_action_server.py; exec bash" &
     gnome-terminal -- bash -c "python3 3d_avoidance_pub.py; exec bash" &
-    #gnome-terminal -- bash -c "python3 avoidance_sub.py; exec bash" &
+    gnome-terminal -- bash -c "python3 avoidance_sub.py; exec bash" &
     
     # Wait for Ctrl+C to be pressed
     while true; do

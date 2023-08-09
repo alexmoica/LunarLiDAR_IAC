@@ -59,7 +59,7 @@
 	  </waypoint>
 	  <waypoint>
 	    <time>30.0</time>
-	    <pose>5 -5 0.239988 0 0 0</pose>
+	    <pose>4 -5 0.239988 0 0 0</pose>
 	  </waypoint>
 	  <waypoint>
 	    <time>60.0</time>

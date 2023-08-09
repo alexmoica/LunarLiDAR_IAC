@@ -3,8 +3,8 @@
 import rclpy
 from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
-from geometry_msgs.msg import Pose
-from std_msgs.msg import Header, Bool
+from geometry_msgs.msg import Point
+from std_msgs.msg import Header, Float32MultiArray
 import math
 
 class Avoidance3D(Node):
@@ -23,8 +23,9 @@ class Avoidance3D(Node):
             'dynamic_rover': None
         }
         
-        self.collision_publisher = self.create_publisher(Bool, 'collision_event', 10)
-        self.no_collision_publisher = self.create_publisher(Bool, 'no_collision_event', 10)
+        self.collision_publisher = self.create_publisher(Float32MultiArray, 'collision_event', 10)
+        self.no_collision_publisher = self.create_publisher(Point, 'no_collision_event', 10)
+        self.collision_flag = False
 
     def timer_callback(self):
         # Wait for the service to be available
@@ -57,18 +58,30 @@ class Avoidance3D(Node):
             # Get previous position of dynamic_rover
             prev_position_dynamic = self.prev_positions['dynamic_rover']
             
-            if prev_position_dynamic is not None:
-                delta_x = position.x - prev_position_dynamic.x
-                delta_y = position.y - prev_position_dynamic.y
-                distance = math.sqrt(delta_x ** 2 + delta_y ** 2)
+            prev_position = self.prev_positions['lunar_rover']
+            
+            if prev_position is not None:
+                # Calculate distance
+                delta_x_distance = position.x - prev_position_dynamic.x
+                delta_y_distance = position.y - prev_position_dynamic.y
+                distance = math.sqrt(delta_x_distance ** 2 + delta_y_distance ** 2)
+                
+                if distance < 1.0:
+                    self.get_logger().info(f'Hit!')
+                    self.collision_flag = True
                 
                 # Check for collision risk based on distance
-                if distance < 4.0:
+                if (prev_position_dynamic.x >= position.x or prev_position_dynamic.y <= position.y) and distance < 5.0:
+                    swerve_data = Float32MultiArray()
+                    swerve_x = 0.8 * (1 if prev_position_dynamic.x < position.x else -1)
+                    swerve_y = -1*((distance / 5.0) * 0.8)
+                    swerve_data.data = [position.x, position.y, swerve_x, swerve_y] 
+                    
                     self.get_logger().info(f'Collision risk detected! Distance: {distance:.2f}')
-                    self.collision_publisher.publish(Bool(data=True))
+                    self.collision_publisher.publish(swerve_data)
                 else:
                     self.get_logger().info(f'No collision risk detected.')
-                    self.no_collision_publisher.publish(Bool(data=True))
+                    self.no_collision_publisher.publish(position)
             
             # Store current position for lunar_rover
             self.prev_positions['lunar_rover'] = position
