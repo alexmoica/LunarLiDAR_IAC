@@ -5,11 +5,15 @@ from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
 from geometry_msgs.msg import Point
 from std_msgs.msg import Header, Float32MultiArray
+from datetime import datetime
 import math
+import csv
+import os
+import time
 
 class Avoidance4D(Node):
     def __init__(self):
-        super().__init__('my_node')
+        super().__init__('Avoidance4D')
 
         # Create a timer to call timer_callback every 2 seconds
         self.timer = self.create_timer(2.0, self.timer_callback)
@@ -30,7 +34,11 @@ class Avoidance4D(Node):
         self.collision_publisher = self.create_publisher(Float32MultiArray, 'collision_event', 10)
         self.no_collision_publisher = self.create_publisher(Point, 'no_collision_event', 10)
         self.collision_flag = False
-        
+        self.result_filename = "result_log.csv"
+        self.flag_finished = False
+        self.flag_initial = True
+        self.start_time = 0
+
     def timer_callback(self):
         # Wait for the service to be available
         if not self.client.wait_for_service(timeout_sec=1.0):
@@ -69,7 +77,28 @@ class Avoidance4D(Node):
             prev_position = self.prev_positions['lunar_rover']['position']
             prev_timestamp = self.prev_positions['lunar_rover']['timestamp']
             
-            if prev_position is not None:
+            if position.y <= -9 and position.x >= 9 and not self.flag_finished:
+                if not os.path.exists(self.result_filename):
+                    with open(self.result_filename, 'w', newline='') as file:
+                        writer = csv.writer(file)
+                        current_datetime = datetime.now()
+                        elapsed_time = time.time() - self.start_time
+                        writer.writerow(["Time of Test", "3D/4D", "Collision", "Time Taken to Goal (s)"])
+                        writer.writerow([current_datetime.strftime("%Y-%m-%d %H:%M:%S"), "4D", self.collision_flag, elapsed_time])
+                else:
+                    with open(self.result_filename, 'a', newline='') as file: 
+                        writer = csv.writer(file)
+                        current_datetime = datetime.now()
+                        elapsed_time = time.time() - self.start_time
+                        writer.writerow([current_datetime.strftime("%Y-%m-%d %H:%M:%S"), "4D", self.collision_flag, elapsed_time])
+                self.flag_finished = True
+                self.get_logger().info(f'End of path.')
+
+            if prev_position is not None and not self.flag_finished:
+                if self.flag_initial:
+                    self.flag_initial = False
+                    self.start_time = time.time()
+                    
                 # Calculate distance and time difference
                 delta_x_distance = position.x - prev_position_dynamic.x
                 delta_y_distance = position.y - prev_position_dynamic.y
@@ -96,7 +125,7 @@ class Avoidance4D(Node):
                     if dot_product < 0 and 0 not in relative_velocity:
                         # Calculate time to collision
                         time_to_collision = distance / math.sqrt(relative_velocity[0] ** 2 + relative_velocity[1] ** 2)
-                        if time_to_collision <= 6:
+                        if time_to_collision <= 10:
                             # Calculate swerve direction
                             swerve_data = Float32MultiArray()
                             

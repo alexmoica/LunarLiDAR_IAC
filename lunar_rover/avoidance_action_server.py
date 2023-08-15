@@ -51,7 +51,7 @@ class AvoidanceActionServer(Node):
                 avoidance_goal.pose.position.x = x_value + x_swerve
                 avoidance_goal.pose.position.y = y_value + y_swerve
 
-                if avoidance_goal.pose.position.y <= -10:
+                if avoidance_goal.pose.position.y <= -9 and avoidance_goal.pose.position.x >= 9:
                     self.get_logger().info('End of path.')
                 else:
                     # Publish the avoidance goal pose
@@ -63,14 +63,18 @@ class AvoidanceActionServer(Node):
             if match:
                 x_value = float(match.group(1))
                 y_value = float(match.group(2))
-                goal.pose.position.x = max(min(x_value + 0.8, 12), -0.5) # bound between -0.5 and 12
-                goal.pose.position.y = min(max(y_value - 0.8, -12), 0.5) # bound between 0.5 and -12
-                
-                if goal.pose.position.y <= -10:
-                    self.get_logger().info('End of path.')
+                if x_value >= 9:
+                    goal.pose.position.x = x_value
                 else:
-                    self._goal_publisher.publish(goal)
-                    self.get_logger().info('Published initial goal.')
+                    goal.pose.position.x = max(min(x_value + 0.8, 14.5), -0.5) # bound between -0.5 and 14.5
+                
+                if y_value <= -9:
+                    goal.pose.position.y = y_value
+                else:
+                    goal.pose.position.y = min(max(y_value - 0.8, -14.5), 0.5) # bound between 0.5 and -14.5
+               
+                self._goal_publisher.publish(goal)
+                self.get_logger().info('Published initial goal.')
         else:
             self.get_logger().info('Ignoring unknown command.')
             
