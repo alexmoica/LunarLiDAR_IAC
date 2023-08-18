@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="logo.png" alt="Logo" width="80" height="80">
+    <img src="media/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">LunarLiDAR</h3>
@@ -42,8 +42,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-![4D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/c68510d8-2a79-4049-a02d-5773c9187135)
+<img src="media/4D LIDAR.gif" alt="4D LIDAR GIF">
 
 <p>The recent advance of 4D LIDAR (Light Detection and Ranging) technology has opened up a new set of possibilities to explore space in much greater detail. This innovative technology is based on the principle of the Doppler effect, which enables it to compute instant velocity in real-time and hence adds a fourth dimension to its preceding technology. In 2022, AEVA, a company specialized in the production of autonomous driving sensors, developed the 4D LIDAR, a new tool that will revolutionize autonomous driving. This new generation of lidars offers better performance in terms of depth, instant velocity, reflectivity, and vision.</p>
 
@@ -103,16 +102,56 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To run the project, do these steps
+To run the lunar rover simulation, follow these steps:
+1. Open a terminal in your ROS2 workspace
+2. Make sure to place the `lunar_rover` folder in your ROS2 workspace
+3. Run `colcon build` to build the lunar_rover package
+4. Open a new terminal in your ROS2 workspace and run `source install/setup.bash`
+5. In the terminal, navigate to `/src/lunar_rover`
+6. To run the 3D LiDAR simulation: `./start.sh 3d`
+7. To run the 4D LiDAR simulation: `./start.sh 4d`
 
-workflow of project (action server, publisher, etc.)
+<br>
+<div style="display: inline-block;">
+  <img src="media/sim_log.png" alt="simulation log" width="33%" style="display: block; margin-right: 10px;">
+  <img src="media/rviz.png" alt="rviz window" width="33%" style="display: block; margin-right: 10px;">
+  <img src="media/gazebo.png" alt="gazebo window" width="33%" style="text-align: center;">
+</div>
 
-3d video
+Once the last command is executed, RViz and Gazebo will open, simulating the lunar rover. The rover employs SLAM to scan and navigate its environment, utilizing its onboard LiDAR.
 
-4d video
+<br>
+<div style="display: inline-block;"><img src="media/avoidance_action_server.png" alt="avoidance action server log" width="33%" style="display: block; margin-right: 10px;"></div>
 
-From this quick test case, you can already see the performance advantages of 4d (screenshot)
+For the avoidance system, an avoidance server is initiated first. This server accepts requests from an avoidance client regarding whether to provide an avoidance goal to the rover or not.
 
+<br>
+<div style="display: inline-block;"><img src="media/avoidance_4d.png" alt="avoidance publisher log" width="33%" style="display: block; margin-right: 10px;"></div>
+
+Next, a publishing server is launched, continuously broadcasting the locations of any rovers in the scene. If the `4d` option was selected, it will also publish their velocities.
+
+<br>
+<div style="display: inline-block;"><img src="media/avoidance_subscriber.png" alt="avoidance subscriber/client log" width="33%" style="display: block; margin-right: 10px;"></div>
+
+A subscriber is initiated to listen to this server and calculate the collision risk between rovers. This is done by measuring the distance between the rovers (for `3d`) and considering the velocity vectors of both rovers (for `4d`). This subscriber also functions as the avoidance client, sending a request to the avoidance server to execute an avoidance maneuver when a collision risk is detected.
+
+<br>
+<br>
+
+<div style="display: inline-block;"><img src="media/3D LIDAR.gif" alt="3D LIDAR GIF"></div>
+
+3D LiDAR Test Case (6x speed)
+
+<br>
+
+<div style="display: inline-block;"><img src="media/4D LIDAR.gif" alt="4D LIDAR GIF"></div>
+
+4D LiDAR Test Case (6x speed)
+
+<br>
+<div style="display: inline-block;"><img src="media/demo_results.png" alt="demo results"></div>
+
+Just from this quick test case, we can already observe the potential performance and efficiency advantages of utilizing a 4D LiDAR.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
