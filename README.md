@@ -43,6 +43,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <img src="media/4D LIDAR.gif" alt="4D LIDAR GIF">
+![4D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/2dab0001-1828-4c1a-a2f6-a8768a71e3c0)
+
 
 <p>The recent advance of 4D LIDAR (Light Detection and Ranging) technology has opened up a new set of possibilities to explore space in much greater detail. This innovative technology is based on the principle of the Doppler effect, which enables it to compute instant velocity in real-time and hence adds a fourth dimension to its preceding technology. In 2022, AEVA, a company specialized in the production of autonomous driving sensors, developed the 4D LIDAR, a new tool that will revolutionize autonomous driving. This new generation of lidars offers better performance in terms of depth, instant velocity, reflectivity, and vision.</p>
 
