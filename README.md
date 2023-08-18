@@ -42,7 +42,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<img src="media/4D LIDAR.gif" alt="4D LIDAR GIF">
 ![4D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/2dab0001-1828-4c1a-a2f6-a8768a71e3c0)
 
 
