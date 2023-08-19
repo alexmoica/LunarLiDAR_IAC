@@ -69,32 +69,28 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy of LunarLiDAR up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+* [ROS2 Iron Irwini](https://docs.ros.org/en/iron/Installation.html)
+* [Gazebo Ignition Fortress](https://gazebosim.org/docs/fortress/install)
+* Install nav2
   ```sh
-  npm install npm@latest -g
-  ```
+   sudo apt install ros-iron-navigation2
+   sudo apt install ros-iron-nav2-bringup
+   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   gh repo clone alexmoica/LunarLiDAR_IAC
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. Create a [ROS2 workspace](https://docs.ros.org/en/iron/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
+4. Place the `lunar_rover` folder in your ROS2 workspace
+5. Open a terminal in your ROS2 workspace
+6. Run `colcon build` to build the `lunar_rover` package
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,13 +99,10 @@ This is an example of how to list things you need to use the software and how to
 ## Usage
 
 To run the lunar rover simulation, follow these steps:
-1. Open a terminal in your ROS2 workspace
-2. Make sure to place the `lunar_rover` folder in your ROS2 workspace
-3. Run `colcon build` to build the lunar_rover package
-4. Open a new terminal in your ROS2 workspace and run `source install/setup.bash`
-5. In the terminal, navigate to `/src/lunar_rover`
-6. To run the 3D LiDAR simulation: `./start.sh 3d`
-7. To run the 4D LiDAR simulation: `./start.sh 4d`
+1. Open a new terminal in your ROS2 workspace and run `source install/setup.bash`
+2. In the terminal, navigate to `/src/lunar_rover`
+3. To run the 3D LiDAR simulation: `./start.sh 3d`
+4. To run the 4D LiDAR simulation: `./start.sh 4d`
 
 <br>
 <div style="display: inline-block;">
