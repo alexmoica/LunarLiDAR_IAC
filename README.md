@@ -42,7 +42,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<img src="media/4D LIDAR.gif" alt="4D LIDAR GIF">
+![4D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/05b9655d-c3b6-493d-bf24-2741cb7caca0)
 
 <p>The recent advance of 4D LIDAR (Light Detection and Ranging) technology has opened up a new set of possibilities to explore space in much greater detail. This innovative technology is based on the principle of the Doppler effect, which enables it to compute instant velocity in real-time and hence adds a fourth dimension to its preceding technology. In 2022, AEVA, a company specialized in the production of autonomous driving sensors, developed the 4D LIDAR, a new tool that will revolutionize autonomous driving. This new generation of lidars offers better performance in terms of depth, instant velocity, reflectivity, and vision.</p>
 
@@ -131,15 +131,13 @@ A subscriber is initiated to listen to this server and calculate the collision r
 <br>
 <br>
 
-<div style="display: inline-block;"><img src="media/3D LIDAR.gif" alt="3D LIDAR GIF"></div>
-
-3D LiDAR Test Case (6x speed)
+![3D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/067bc5f6-0fe8-4441-a048-9e687d76b28f)
+<br>3D LiDAR Test Case (6x speed)
 
 <br>
 
-<div style="display: inline-block;"><img src="media/4D LIDAR.gif" alt="4D LIDAR GIF"></div>
-
-4D LiDAR Test Case (6x speed)
+![4D LIDAR](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/05b9655d-c3b6-493d-bf24-2741cb7caca0)
+<br>4D LiDAR Test Case (6x speed)
 
 <br>
 <div style="display: inline-block;"><img src="media/demo_results.png" alt="demo results"></div>
