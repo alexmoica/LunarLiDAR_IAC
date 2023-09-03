@@ -261,12 +261,10 @@ To test the rover's ability to respond to both stationary and moving obstacles, 
 <br>
 
 
-**Reference Photos**
-<div style="display: inline-block;">
-  <img src="media/ref1.png" alt="real view reference" width="33%" style="display: block; margin-right: 10px;">
-  <img src="media/ref2.png" alt="lidar view reference" width="33%" style="display: block; margin-right: 10px;">
-</div>
-
+**Reference Photo of Test**
+<div style="display: inline-block;"><img src="media/ref1.png" alt="real view reference" width="33%" style="display: block; margin-right: 10px;"></div>
+<br>
+<br>
 
 **Results**
 
