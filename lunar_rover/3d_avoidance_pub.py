@@ -95,7 +95,7 @@ class Avoidance3D(Node):
                 delta_y_distance = position.y - prev_position_dynamic.y
                 distance = math.sqrt(delta_x_distance ** 2 + delta_y_distance ** 2)
                 
-                if distance < 1.0:
+                if distance < 0.2:
                     self.get_logger().info(f'Hit!')
                     self.collision_flag = True
                 

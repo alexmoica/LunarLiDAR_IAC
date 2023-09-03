@@ -58,11 +58,11 @@
 	    <pose>12 -5 0.239988 0 0 0</pose>
 	  </waypoint>
 	  <waypoint>
-	    <time>30.0</time>
+	    <time>30</time>
 	    <pose>4 -5 0.239988 0 0 0</pose>
 	  </waypoint>
 	  <waypoint>
-	    <time>60.0</time>
+	    <time>60</time>
 	    <pose>12 -5 0.239988 0 0 0</pose>
 	  </waypoint>
 	</trajectory>
@@ -164,6 +164,37 @@
       </link>
       <pose frame=''>7 -7 0 0 0 0</pose>
     </model>
+    
+    <model name='rover_obstacle'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>4 0.5 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>4 0.5 2</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>3 -3 1 0 0 0</pose>
+    </model>
+    
     <model name='gray_wall_north'>
       <static>1</static>
       <link name='link'>

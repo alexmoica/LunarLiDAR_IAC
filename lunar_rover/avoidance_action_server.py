@@ -66,12 +66,12 @@ class AvoidanceActionServer(Node):
                 if x_value >= 9:
                     goal.pose.position.x = x_value
                 else:
-                    goal.pose.position.x = max(min(x_value + 0.8, 14.5), -0.5) # bound between -0.5 and 14.5
+                    goal.pose.position.x = max(min(x_value + 2, 14.5), -0.5) # bound between -0.5 and 14.5
                 
                 if y_value <= -9:
                     goal.pose.position.y = y_value
                 else:
-                    goal.pose.position.y = min(max(y_value - 0.8, -14.5), 0.5) # bound between 0.5 and -14.5
+                    goal.pose.position.y = min(max(y_value - 2, -14.5), 0.5) # bound between 0.5 and -14.5
                
                 self._goal_publisher.publish(goal)
                 self.get_logger().info('Published initial goal.')

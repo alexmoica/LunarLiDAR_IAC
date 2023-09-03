@@ -16,7 +16,7 @@ class Avoidance4D(Node):
         super().__init__('Avoidance4D')
 
         # Create a timer to call timer_callback every 2 seconds
-        self.timer = self.create_timer(2.0, self.timer_callback)
+        self.timer = self.create_timer(2, self.timer_callback)
 
         # Create a client to call the Gazebo GetEntityState service
         self.client = self.create_client(GetEntityState, '/gazebo/get_entity_state')
@@ -113,7 +113,7 @@ class Avoidance4D(Node):
                 
                 # Check for collision risk based on distance and velocities
                 if distance < 5.0:
-                    if distance < 1.0:
+                    if distance < 0.2:
                         self.get_logger().info(f'Hit!')
                         self.collision_flag = True
                     # Calculate relative velocity
