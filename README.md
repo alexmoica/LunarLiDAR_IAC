@@ -183,94 +183,110 @@ To test the performance of the rover in a scenario with dynamic or unpredictable
 
 Average UR Speeds by Test Case
 
-|  | OR Speed x1  | OR Speed x2 | OR Speed x3 |
+|  | OR Speed x1  | OR Speed x2 | OR Speed x4 |
 | ------------- | ------------- | ------------- | ------------- |
 | 3D  | 0.10 units/s  | 0.11 units/s  | 0.12 units/s  |
 | 4D  | 0.19 units/s  | 0.20 units/s  | 0.18 units/s  |
-
-
-Findings
 <br>
-The most important value for this test was the collision occurence as the OR's speed increased. We can see that at x4 Speed, the 3D LIDAR was unable to avoid a collision in a couple of the cases. In these cases, the UR was already intersecting the path of the OR when it detected the OR and because of the high speeds, the OR was unable to make large enough corrections in time. On the other hand, the 4D LIDAR was able to make more drastic corrections due to knowing how fast the OR was approaching. There is no meaningful change in the amount of time to the goal, any variation can be attributed to where the obstacle rover was on its path when it was intersected by the user rover.
+<br>
+
+**Findings**
+<br>
+The most important aspect of this test was the occurrence of collisions as the OR's speed increased. At Speed x4, the 3D LIDAR couldn't avoid collisions in a few cases since the UR had already crossed onto the OR's path when it detected it, and due to high speeds, the OR couldn't avoid in time. In contrast, the 4D LIDAR could make more significant corrections due to knowing the velocity information of the OR. There is no meaningful change in the amount of time to the goal, any variation can be attributed to the OR's location in its path when it was intersected by the UR.
+<br>
+<br>
 
 
+### Test 2: Increasing the speed of the UR
 
-Test 2: Increasing the speed of the user rover
-
-Rationale
+**Rationale**
 <br>
 To test the ability of the rover to handle high-speed navigation and obstacle avoidance.
+<br>
+<br>
 
-Initial Conditions
+**Initial Conditions**
 <br>
 `OR:` Begin at (12, -5) and patrol between (12, -5) and (4, -5) at a speed of 0.2667 units/s
+<br>
 <br>
 `UR Speed x1:` Begin at (0,0) and move towards the goal (9,-9) at a maximum speed of 0.36 units/s and with a maximum rotation speed of 1.0 rad/s
 <br>
+<br>
 `UR Speed x2:` Maximum speed increased to 0.72 units/s and 2.0 rad/s
 <br>
-`UR Speed x4:` Maximum speed increased to 1.44 units/s and 4.0 rad/s
-
-Results
-
-
-Average UR Speeds
-UR Speed x1:
-3D: 0.10 units/s
-4D: 0.19 units/s
-
-UR Speed x2:
-3D: 0.15 units/s
-4D: 0.24 units/s
-
-UR Speed x4:
-3D: 0.21 units/s
-4D: 0.32 units/s
-
-
-Findings
 <br>
-Both 3D and 4D LIDARS were able to successfully navigate to the goal in high speed environments without collisions occuring. The 4D LIDAR resulted in a consistently faster path to the goal, with the average speed increasing by 23.89% from Speed x1 to Speed x2 and 32.62% from Speed x2 to Speed x4. Although slower overall, the 3D LIDAR average speed increased at a greater rate between series, with a 53.53% and 33.19% increase respectively. 3D LIDAR scales more because the algorithm keeps a constant distance from the OR when avoiding it, meaning that the same amount of extra distance towards the goal has to be covered and so a faster speed will save time in this segment. Since the 4D LIDAR pathing doesent experience as large increase rates, it also means that it is a more effecient algorithm overall than the 3D one.
+`UR Speed x4:` Maximum speed increased to 1.44 units/s and 4.0 rad/s
+<br>
+<br>
+
+**Results**
+
+Average UR Speeds by Test Case
+
+|  | UR Speed x1  | UR Speed x2 | UR Speed x4 |
+| ------------- | ------------- | ------------- | ------------- |
+| 3D  | 0.10 units/s  | 0.15 units/s  | 0.21 units/s  |
+| 4D  | 0.19 units/s  | 0.24 units/s  | 0.32 units/s  |
+<br>
+<br>
 
 
-Test 3: Placing an obstacle between the rovers
+**Findings**
+<br>
+Both 3D and 4D LIDARs successfully reached the goal in high-speed environments without any collisions. The 4D LIDAR consistently resulted in a faster path, with speed increasing by 23.89% from Speed x1 to x2 and 32.62% from x2 to x4. While the 3D LIDAR was slower overall, it scaled more efficiently due to its algorithm's constant distance from the obstacle rover. This means that the higher UR speeds saved time after obstacle avoidance as the UR moved towards the goal. Since the 4D LIDAR's pathing doesn't experience such significant rate increases, it implies that it's a more efficient algorithm overall compared to the 3D LIDAR.
+<br>
+<br>
 
-Rationale
+
+### Test 3: Placing an obstacle between the rovers
+
+**Rationale**
 <br>
 To test the rover's ability to respond to both stationary and moving obstacles, particularly in scenarios where it has minimal time to detect the moving obstacle.
+<br>
+<br>
 
-Initial Conditions
+
+**Initial Conditions**
 <br>
 `OR:` Begin at (12, -5) and patrol between (12, -5) and (4, -5) at a speed of 0.2667 units/s
 <br>
-`UR` Begin at (0,0) and move towards the goal (9,-9) at a maximum speed of 0.36 units/s and with a maximum rotation speed of 1.0 rad/s
 <br>
-`Static Obstacle` Wall measuring 4 units in the x-direction and 0.5 units in the y-direction, centered at (3, -3)
-
-Reference Photos
-
-
-
-Results
-
-Average UR Speeds
-No Obstacle:
-3D: 0.10 units/s
-4D: 0.19 units/s
-
-With Obstacle:
-3D: 0.07 units/s
-4D: 0.18 units/s
+`UR:` Begin at (0,0) and move towards the goal (9,-9) at a maximum speed of 0.36 units/s and with a maximum rotation speed of 1.0 rad/s
+<br>
+<br>
+`Static Obstacle:` Wall measuring 4 units in the x-direction and 0.5 units in the y-direction, centered at (3, -3)
+<br>
+<br>
 
 
-Findings
+**Reference Photos**
+<div style="display: inline-block;">
+  <img src="media/ref1.png" alt="real view reference" width="33%" style="display: block; margin-right: 10px;">
+  <img src="media/ref2.png" alt="lidar view reference" width="33%" style="display: block; margin-right: 10px;">
+</div>
+
+
+**Results**
+
+Average UR Speeds by Test Case
+
+|  | No Obstacle | With Obstacle |
+| ------------- | ------------- | ------------- |
+| 3D  | 0.10 units/s  | 0.07 units/s  |
+| 4D  | 0.19 units/s  | 0.18 units/s  |
+<br>
+<br>
+
+
+**Findings**
 <br>
 Both LIDARS were able to navigate to the goal without collisions when a static obstacle was introduced. The 4D LIDAR did not suffer a meaningful decrease in average speed, taking extra time to navigate around the wall but still plotting an effecient path around the OR, while the 3D LIDAR experienced an additional pathing delay between navigating around the wall and avoiding the OR.
-
+<br>
+<br>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 
 <!-- CONTACT -->
