@@ -179,6 +179,9 @@ To test the performance of the rover in a scenario with dynamic or unpredictable
 
 **Results**
 
+<div style="display: inline-block;"><img src="media/T1_graph.png" alt="T1 graph" width="66%" style="display: block; margin-right: 10px;"></div>
+<br>
+
 Average UR Speeds by Test Case
 
 |  | OR Speed x1  | OR Speed x2 | OR Speed x4 |
@@ -219,6 +222,9 @@ To test the ability of the rover to handle high-speed navigation and obstacle av
 <br>
 
 **Results**
+
+<div style="display: inline-block;"><img src="media/T2_graph.png" alt="T2 graph" width="66%" style="display: block; margin-right: 10px;"></div>
+<br>
 
 Average UR Speeds by Test Case
 
@@ -265,6 +271,9 @@ To test the rover's ability to respond to both stationary and moving obstacles, 
 <br>
 
 **Results**
+
+<div style="display: inline-block;"><img src="media/T3_graph.png" alt="T3 graph" width="66%" style="display: block; margin-right: 10px;"></div>
+<br>
 
 Average UR Speeds by Test Case
 
