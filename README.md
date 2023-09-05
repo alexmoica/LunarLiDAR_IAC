@@ -1,5 +1,3 @@
-![image](https://github.com/alexmoica/LunarLiDAR_IAC/assets/6493847/5b9c2b3b-46e2-466c-b8fb-82fd2c7c8869)<a name="readme-top"></a>
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
