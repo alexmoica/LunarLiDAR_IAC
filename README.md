@@ -34,6 +34,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#results--findings">Results & Findings</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -290,6 +291,14 @@ Average UR Speeds by Test Case
 Both LIDARS were able to navigate to the goal without collisions when a static obstacle was introduced. The 4D LIDAR did not suffer a meaningful decrease in average speed, taking extra time to navigate around the wall but still plotting an effecient path around the OR, while the 3D LIDAR experienced an additional pathing delay between navigating around the wall and avoiding the OR.
 <br>
 <br>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- CONCLUSION -->
+## Conclusion
+
+The 4D LIDAR algorithm used in this study consistently demonstrated better efficiency and safety compared to the 3D LIDAR algorithm across all three tested scenarios. The 4D LIDAR system consistently reached the goal in a significantly shorter amount of time and, more importantly, without any collisions. These results underscore the significant advantage of adopting the 4D LIDAR technology for a lunar rover, ensuring not only faster task completion but also a heightened level of safety during its operations in dynamic and obstacle-rich environments.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
