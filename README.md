@@ -11,7 +11,7 @@
   <p align="center">
     SLAM navigation system for lunar rovers aiming to evaluate the advantages of utilizing 4D LIDAR in contrast to conventional 3D LIDAR in the lunar environment. By fusing simulated 4D LIDAR with integrated sensors, this system aims to enhance collision detection, avoidance capabilities, and overall navigation efficiency.
 
-***This project and its [associated paper](https://iafastro.directory/iac/paper/id/76972/ext/appendix/IAC-23,C2,IP,1,x76972.pdf) has been accepted to the International Astronautical Congress (IAC) 2023 🚀***
+`This project and its ` [associated paper](https://iafastro.directory/iac/paper/id/76972/ext/appendix/IAC-23,C2,IP,1,x76972.pdf) ` has been accepted to the International Astronautical Congress (IAC) 2023 🚀`
     <br />
   </p>
 </div>
